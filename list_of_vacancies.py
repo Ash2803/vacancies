@@ -5,17 +5,27 @@ import requests
 
 def get_vacancies():
     """Getting vacancies from HeadHunter"""
-    vacancies = []
-    params = {
-        'text': 'Программист',
-        'area': '1',
-        'only_with_salary': 'true'
-    }
-    response = requests.get('https://api.hh.ru/vacancies', params=params)
-    response.raise_for_status()
-    for vacancy in response.json()['items']:
-        vacancies.append(vacancy)
-    return vacancies
+    languages = [
+        'Python',
+        'Java',
+        'Javascript',
+        'Ruby',
+        'PHP',
+        'C++',
+        'C#',
+        'C',
+        'Scala',
+        'Swift'
+    ]
+    for language in languages:
+        params = {
+            'text': f'Программист {language}',
+            'area': '1',
+            'only_with_salary': 'true'
+        }
+        response = requests.get('https://api.hh.ru/vacancies', params=params)
+        response.raise_for_status()
+        return response.json()['items']
 
 
 def get_vacancies_count():
@@ -49,15 +59,16 @@ def predict_rub_salary(vacancies):
             print(None)
         if salary['salary']['from'] and salary['salary']['to']:
             avg_salary = (salary['salary']['from'] + salary['salary']['to']) / 2
-            print(avg_salary)
+            print(int(avg_salary))
         elif salary['salary']['from']:
             from_avg_salary = salary['salary']['from'] * 1.2
-            print(from_avg_salary)
+            print(int(from_avg_salary))
         elif salary['salary']['to']:
             to_avg_salary = salary['salary']['to'] * 0.8
-            print(to_avg_salary)
+            print(int(to_avg_salary))
             # pprint(salary['salary'])
     # print(vacancies[0]['salary'])
+
 
 def get_salary():
     params = {
@@ -73,10 +84,11 @@ def get_salary():
 
 
 def main():
-    predict_rub_salary(get_vacancies())
-    # pprint(get_vacancies())
-    # pprint(get_vacancies_count())
-    # pprint(get_salary())
+    pprint(get_vacancies())
+    # predict_rub_salary(get_vacancies())
+    # # pprint(get_vacancies())
+    # # pprint(get_vacancies_count())
+    # # pprint(get_salary())
 
 
 if __name__ == '__main__':
