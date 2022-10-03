@@ -28,18 +28,24 @@ def get_vacancies_count(language):
 
 
 def predict_rub_salary(vacancies):
+    predict_salaries = []
     for salary in vacancies:
         if salary['salary']['currency'] != 'RUR':
-            print(None)
+            continue
         if salary['salary']['from'] and salary['salary']['to']:
-            avg_salary = (salary['salary']['from'] + salary['salary']['to']) / 2
-            print(int(avg_salary))
-        elif salary['salary']['from']:
-            from_avg_salary = salary['salary']['from'] * 1.2
-            print(int(from_avg_salary))
-        elif salary['salary']['to']:
-            to_avg_salary = salary['salary']['to'] * 0.8
-            print(int(to_avg_salary))
+            predict_salaries.append((salary['salary']['from'] + salary['salary']['to']) // 2)
+        if salary['salary']['from']:
+            predict_salaries.append(int(salary['salary']['from'] * 1.2))
+        if salary['salary']['to']:
+            predict_salaries.append(int(salary['salary']['to'] * 0.8))
+    return predict_salaries
+
+
+def get_avg_salary(salaries):
+    avg_salary = []
+    for i in salaries:
+        avg_salary.append(round(sum(i) / len(i)))
+    return avg_salary
 
 
 def get_salary():
@@ -55,6 +61,7 @@ def get_salary():
 
 
 def main():
+    popular_langs = []
     languages = [
         'Python',
         'Java',
@@ -68,7 +75,9 @@ def main():
         'Swift'
     ]
     for language in languages:
-        predict_rub_salary(get_vacancies(language))
+        popular_langs.append(predict_rub_salary(get_vacancies(language)))
+    print(get_avg_salary(popular_langs))
+
 
 
 if __name__ == '__main__':
