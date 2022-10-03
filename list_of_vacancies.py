@@ -30,14 +30,16 @@ def get_vacancies_count(language):
 def predict_rub_salary(vacancies):
     for salary in vacancies:
         if salary['salary']['currency'] != 'RUR':
-            return None
+            print(None)
         if salary['salary']['from'] and salary['salary']['to']:
             avg_salary = (salary['salary']['from'] + salary['salary']['to']) / 2
+            print(int(avg_salary))
         elif salary['salary']['from']:
             from_avg_salary = salary['salary']['from'] * 1.2
+            print(int(from_avg_salary))
         elif salary['salary']['to']:
             to_avg_salary = salary['salary']['to'] * 0.8
-        return to_avg_salary
+            print(int(to_avg_salary))
 
 
 def get_salary():
@@ -66,7 +68,7 @@ def main():
         'Swift'
     ]
     for language in languages:
-        pprint(predict_rub_salary(get_vacancies(language)))
+        predict_rub_salary(get_vacancies(language))
 
 
 if __name__ == '__main__':
