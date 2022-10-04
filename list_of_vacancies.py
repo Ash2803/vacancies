@@ -16,15 +16,13 @@ def get_vacancies(language):
 
 
 def get_vacancies_count(language):
-    popular_langs = {}
     params = {
         'text': language,
         'area': '1',
     }
     response = requests.get('https://api.hh.ru/vacancies', params=params)
     response.raise_for_status()
-    popular_langs[language] = response.json()['found']
-    return popular_langs
+    return response.json()['found']
 
 
 def predict_rub_salary(vacancies):
@@ -43,8 +41,7 @@ def predict_rub_salary(vacancies):
 
 def get_avg_salary(salaries):
     avg_salary = round(sum(salaries) / len(salaries))
-    proceed = len(salaries)
-    return avg_salary, proceed
+    return avg_salary
 
 
 def get_salary():
@@ -72,10 +69,13 @@ def main():
         'Scala',
         'Swift'
     ]
+    dict_ = {}
     for language in languages:
         a = predict_rub_salary(get_vacancies(language))
-        print(get_avg_salary(a))
-        print(get_vacancies_count(language))
+        dict_[language] = {'vacancies_found': get_vacancies_count(language),
+                           'vacancies_processed': len(a),
+                           "average_salary": get_avg_salary(a)}
+    pprint(dict_)
 
 
 if __name__ == '__main__':
