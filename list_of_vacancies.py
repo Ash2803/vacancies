@@ -42,10 +42,9 @@ def predict_rub_salary(vacancies):
 
 
 def get_avg_salary(salaries):
-    avg_salary = []
-    for i in salaries:
-        avg_salary.append(round(sum(i) / len(i)))
-    return avg_salary
+    avg_salary = round(sum(salaries) / len(salaries))
+    proceed = len(salaries)
+    return avg_salary, proceed
 
 
 def get_salary():
@@ -61,7 +60,6 @@ def get_salary():
 
 
 def main():
-    popular_langs = []
     languages = [
         'Python',
         'Java',
@@ -75,9 +73,9 @@ def main():
         'Swift'
     ]
     for language in languages:
-        popular_langs.append(predict_rub_salary(get_vacancies(language)))
-    print(get_avg_salary(popular_langs))
-
+        a = predict_rub_salary(get_vacancies(language))
+        print(get_avg_salary(a))
+        print(get_vacancies_count(language))
 
 
 if __name__ == '__main__':
