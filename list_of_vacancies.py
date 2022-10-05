@@ -17,6 +17,7 @@ def get_vacancies(language):
         response = requests.get('https://api.hh.ru/vacancies', params=params)
         response.raise_for_status()
         page += 1
+        pages_number += 1
         return response.json()['items']
 
 
