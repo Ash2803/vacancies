@@ -5,14 +5,19 @@ import requests
 
 def get_vacancies(language):
     """Getting vacancies from HeadHunter"""
+    page = 0
+    pages_number = 1
     params = {
         'text': f'Программист {language}',
         'area': '1',
-        'only_with_salary': 'true'
+        'only_with_salary': 'true',
+        'page': page
     }
-    response = requests.get('https://api.hh.ru/vacancies', params=params)
-    response.raise_for_status()
-    return response.json()['items']
+    while page < pages_number:
+        response = requests.get('https://api.hh.ru/vacancies', params=params)
+        response.raise_for_status()
+        page += 1
+        return response.json()['items']
 
 
 def get_vacancies_count(language):
