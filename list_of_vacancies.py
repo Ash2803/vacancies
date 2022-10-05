@@ -7,18 +7,23 @@ def get_vacancies(language):
     """Getting vacancies from HeadHunter"""
     page = 0
     pages_number = 1
-    params = {
-        'text': f'Программист {language}',
-        'area': '1',
-        'only_with_salary': 'true',
-        'page': page
-    }
+    vacancies = []
     while page < pages_number:
+        params = {
+            'text': f'Программист {language}',
+            'area': '1',
+            'only_with_salary': 'true',
+            'page': page
+        }
         response = requests.get('https://api.hh.ru/vacancies', params=params)
         response.raise_for_status()
         page += 1
         pages_number += 1
-        return response.json()['items']
+        if len(response.json()['items']) == 0:
+            break
+        else:
+            vacancies += response.json()['items']
+    return vacancies
 
 
 def get_vacancies_count(language):
