@@ -19,10 +19,10 @@ def get_vacancies(language):
         response.raise_for_status()
         page += 1
         pages_number += 1
-        if len(response.json()['items']) == 0:
+        if not response.json()['items']:
             break
         else:
-            vacancies += response.json()['items']
+            vacancies.extend(response.json()['items'])
     return vacancies
 
 
