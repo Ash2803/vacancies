@@ -58,21 +58,3 @@ def predict_rub_salary_sj(vacancies):
         if salary['payment_to']:
             predict_salaries.append(int(salary['payment_to'] * 0.8))
     return predict_salaries
-
-
-def create_table(jobs_stats):
-    """Creating table with vacancies stats"""
-    title = 'SuperJob Moscow'
-    table_data = [
-        ['Язык программирования',
-         'Вакансий найдено',
-         'Вакансий обработано',
-         'Средняя зарплата'],
-    ]
-    for key, value in jobs_stats.items():
-        table_data.append([key, value['vacancies_found'],
-                           value['vacancies_processed'],
-                           value['average_salary']]
-                          )
-    table_instance = AsciiTable(table_data, title)
-    return table_instance.table
