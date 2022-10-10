@@ -1,5 +1,10 @@
+import os
+
 import requests
+from dotenv import load_dotenv
 from terminaltables import AsciiTable
+
+from average_salary import get_avg_salary
 
 
 def get_vacancies_sj(secret_key, language):
