@@ -1,6 +1,7 @@
 import os
 from pprint import pprint
 from dotenv import load_dotenv
+from terminaltables import AsciiTable
 import requests
 
 
@@ -123,6 +124,24 @@ def get_avg_salary(salaries):
 #         pprint(i['salary'])
 
 
+def create_table(jobs_stats):
+    title = 'SuperJob Moscow'
+    table_data = [
+        ['Язык программирования',
+         'Вакансий найдено',
+         'Вакансий обработано',
+         'Средняя зарплата'],
+    ]
+
+    for key, value in jobs_stats.items():
+        table_data.append([key, value['vacancies_found'],
+                     value['vacancies_processed'],
+                     value['average_salary']]
+                    )
+    table_instance = AsciiTable(table_data, title)
+    return table_instance.table
+
+
 def main():
     load_dotenv()
     secret_key = os.environ['SECRET_KEY']
@@ -140,13 +159,15 @@ def main():
         'Scala',
         'Swift'
     ]
-    dict_ = {}
+    jobs_stats = {}
     for language in languages:
         a = predict_rub_salary_sj(get_vacancies_sj(secret_key, language))
-        dict_[language] = {'vacancies_found': get_vacancies_count_sj(secret_key, language),
-                           'vacancies_processed': len(a),
-                           "average_salary": get_avg_salary(a)}
-    pprint(dict_)
+        jobs_stats[language] = {'vacancies_found': len(a),
+                                'vacancies_processed': get_vacancies_count_sj(secret_key, language),
+                                "average_salary": get_avg_salary(a)
+                                }
+    create_table(jobs_stats)
+    # print(dict_)
 
     # dict_ = {}
     # for language in languages:
