@@ -1,10 +1,5 @@
-import os
-
 import requests
-from dotenv import load_dotenv
 from terminaltables import AsciiTable
-
-from average_salary import get_avg_salary
 
 
 def get_vacancies_sj(secret_key, language):
@@ -81,32 +76,3 @@ def create_table(jobs_stats):
                           )
     table_instance = AsciiTable(table_data, title)
     return table_instance.table
-
-
-def main():
-    load_dotenv()
-    secret_key = os.environ['SECRET_KEY']
-    languages = [
-        'Python',
-        'Java',
-        'Javascript',
-        'Ruby',
-        'PHP',
-        'C++',
-        'C#',
-        'C',
-        'Scala',
-        'Swift'
-    ]
-    jobs_stats = {}
-    for language in languages:
-        predicted_salary = predict_rub_salary_sj(get_vacancies_sj(secret_key, language))
-        jobs_stats[language] = {'vacancies_found': len(predicted_salary),
-                                'vacancies_processed': get_vacancies_count_sj(secret_key, language),
-                                "average_salary": get_avg_salary(predicted_salary)
-                                }
-    print(create_table(jobs_stats))
-
-
-if __name__ == '__main__':
-    main()
