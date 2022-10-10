@@ -31,7 +31,7 @@ def get_vacancies_sj(secret_key, language):
             break
         else:
             vacancies.extend(response.json()['objects'])
-            return vacancies
+        return vacancies
 
 
 def get_vacancies_count_sj(secret_key, language):
