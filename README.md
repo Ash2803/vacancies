@@ -10,20 +10,14 @@
 ```
 pip install -r requirements.txt
 ```
-# Вывод статистки по hh.ru
-- Запустите hh_vacancies.py:
-```
-python hh_vacancies.py
-```
-# Вывод статистки по superjob.ru
+# Вывод статистки по вакансиям
 
 - Получить ключ к API <a href="https://api.superjob.ru/" target="_blank">тут</a>
 - Создать переменную окружения `SECRET_KEY` и поместить в нее полученный токен
 - Запустить скрипт
 ```
-python superjob_vacancies.py
+python main.py
 ```
-
 # Цель проекта
 
 Код написан в образовательных целях на онлайн-курсе для веб-разработчиков dvmn.org.
