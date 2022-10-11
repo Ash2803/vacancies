@@ -1,5 +1,7 @@
 import requests
 
+from average_salary import get_predict_rub_salary
+
 
 def get_vacancies_hh(language):
     """Getting vacancies from HeadHunter"""
@@ -37,16 +39,14 @@ def get_vacancies_count_hh(language):
     return response.json()['found']
 
 
-def predict_rub_salary_hh(vacancies):
-    """Get predicted salaries from vacancies"""
-    predict_salaries = []
-    for salary in vacancies:
-        if salary['salary']['currency'] != 'RUR':
+def get_salaries_hh(vacancy):
+    """Get salaries from vacancies"""
+    predicted_salaries = []
+    for vacancy_salary in vacancy:
+        if vacancy_salary['salary']['currency'] != 'RUR':
             continue
-        if salary['salary']['from'] and salary['salary']['to']:
-            predict_salaries.append((salary['salary']['from'] + salary['salary']['to']) // 2)
-        if salary['salary']['from']:
-            predict_salaries.append(int(salary['salary']['from'] * 1.2))
-        if salary['salary']['to']:
-            predict_salaries.append(int(salary['salary']['to'] * 0.8))
-    return predict_salaries
+        salary_from = vacancy_salary['salary']['from']
+        salary_to = vacancy_salary['salary']['to']
+        predicted_salary = get_predict_rub_salary(salary_from, salary_to)
+        predicted_salaries.append(predicted_salary)
+    return predicted_salaries

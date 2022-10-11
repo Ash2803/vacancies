@@ -1,5 +1,6 @@
 import requests
 
+from average_salary import get_predict_rub_salary
 
 TOWN = 4
 CATALOGUE = 33
@@ -50,16 +51,14 @@ def get_vacancies_count_sj(secret_key, language):
     return response.json()['total']
 
 
-def predict_rub_salary_sj(vacancies):
-    """Get predicted salaries from vacancies"""
-    predict_salaries = []
-    for salary in vacancies:
-        if salary['currency'] != 'rub':
+def get_salaries_sj(vacancy):
+    """Get salaries from vacancies"""
+    predicted_salaries = []
+    for vacancy_salary in vacancy:
+        if vacancy_salary['currency'] != 'rub':
             continue
-        if salary['payment_from'] and salary['payment_to']:
-            predict_salaries.append((salary['payment_from'] + salary['payment_to']) // 2)
-        if salary['payment_from']:
-            predict_salaries.append(int(salary['payment_from'] * 1.2))
-        if salary['payment_to']:
-            predict_salaries.append(int(salary['payment_to'] * 0.8))
-    return predict_salaries
+        salary_from = vacancy_salary['payment_from']
+        salary_to = vacancy_salary['payment_to']
+        predicted_salary = get_predict_rub_salary(salary_from, salary_to)
+        predicted_salaries.append(predicted_salary)
+    return predicted_salaries
