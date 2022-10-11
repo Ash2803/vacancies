@@ -11,18 +11,18 @@ from superjob_vacancies import get_vacancies_sj, get_vacancies_count_sj, get_sal
 def create_table(jobs_stats, resource):
     """Creating table with vacancies stats"""
     title = resource
-    table_data = [
+    statistics_table = [
         ['Язык программирования',
          'Вакансий найдено',
          'Вакансий обработано',
          'Средняя зарплата'],
     ]
     for key, value in jobs_stats.items():
-        table_data.append([key, value['vacancies_found'],
+        statistics_table.append([key, value['vacancies_found'],
                            value['vacancies_processed'],
                            value['average_salary']]
                           )
-    table_instance = AsciiTable(table_data, title)
+    table_instance = AsciiTable(statistics_table, title)
     return table_instance.table
 
 
