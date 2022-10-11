@@ -47,5 +47,3 @@ def get_salaries_hh(vacancies):
             predicted_salary = get_predict_rub_salary(salary_from, salary_to)
             predicted_salaries.append(predicted_salary)
     return predicted_salaries
-
-print(get_vacancies_hh('Python'))

@@ -20,7 +20,7 @@ def get_vacancies_sj(secret_key, language):
     list_of_vacancies = []
     while page < pages_number:
         params = {
-            'town': TOWN,
+            'town': TOWN,  # 4 - id of Moscow
             'catalogues': CATALOGUE,
             'keyword': f'Программист {language}',
             'no_agreement': NO_AGREEMENT,
@@ -53,3 +53,7 @@ def get_salaries_sj(vacancy):
         predicted_salary = get_predict_rub_salary(salary_from, salary_to)
         predicted_salaries.append(predicted_salary)
     return predicted_salaries
+
+# load_dotenv()
+# secret_key = os.environ['SJ_SECRET_KEY']
+# print(get_vacancies_sj(secret_key, 'Python'))
