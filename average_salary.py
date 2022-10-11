@@ -10,8 +10,5 @@ def get_predict_rub_salary(salary_from, salary_to):
 
 def get_avg_salary(salaries):
     """Get average salaries"""
-    if len:
-        avg_salary = round(sum(salaries) / len(salaries))
-    else:
-        return 0
+    avg_salary = round(sum(salaries) / len(salaries)) if len else 0
     return avg_salary
