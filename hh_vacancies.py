@@ -14,39 +14,38 @@ def get_vacancies_hh(language):
             'text': f'Программист {language}',
             'area': city,
             'only_with_salary': 'true',
+            'per_page': 100,
             'page': page
         }
         response = requests.get('https://api.hh.ru/vacancies', params=params)
         response.raise_for_status()
         page += 1
         pages_number += 1
-        vacancies = response.json()['items']
-        if not vacancies:
+        vacancies = response.json()
+        if not vacancies['items']:
             break
         else:
-            list_of_vacancies.extend(vacancies)
+            list_of_vacancies.append(vacancies)
     return list_of_vacancies
 
 
-def get_vacancies_count_hh(language):
+def get_vacancies_count_hh(vacancies):
     """Get vacancies count"""
-    params = {
-        'text': f'Программист {language}',
-        'area': '1',
-    }
-    response = requests.get('https://api.hh.ru/vacancies', params=params)
-    response.raise_for_status()
-    return response.json()['found']
+    for count in vacancies:
+        return count['found']
 
 
-def get_salaries_hh(vacancy):
+def get_salaries_hh(vacancies):
     """Get salaries from vacancies"""
     predicted_salaries = []
-    for vacancy_salary in vacancy:
-        if vacancy_salary['salary']['currency'] != 'RUR':
-            continue
-        salary_from = vacancy_salary['salary']['from']
-        salary_to = vacancy_salary['salary']['to']
-        predicted_salary = get_predict_rub_salary(salary_from, salary_to)
-        predicted_salaries.append(predicted_salary)
+    for vacancy in vacancies:
+        for vacancy_salary in vacancy['items']:
+            if vacancy_salary['salary']['currency'] != 'RUR':
+                continue
+            salary_from = vacancy_salary['salary']['from']
+            salary_to = vacancy_salary['salary']['to']
+            predicted_salary = get_predict_rub_salary(salary_from, salary_to)
+            predicted_salaries.append(predicted_salary)
     return predicted_salaries
+
+print(get_vacancies_hh('Python'))
