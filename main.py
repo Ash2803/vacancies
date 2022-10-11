@@ -17,11 +17,11 @@ def create_table(jobs_stats, resource):
          'Вакансий обработано',
          'Средняя зарплата'],
     ]
-    for key, value in jobs_stats.items():
-        statistics_table.append([key, value['vacancies_found'],
-                           value['vacancies_processed'],
-                           value['average_salary']]
-                          )
+    for language, stats in jobs_stats.items():
+        statistics_table.append([language, stats['vacancies_found'],
+                                 stats['vacancies_processed'],
+                                 stats['average_salary']]
+                                )
     table_instance = AsciiTable(statistics_table, title)
     return table_instance.table
 
