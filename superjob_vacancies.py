@@ -1,10 +1,9 @@
-import os
-
 import requests
-from dotenv import load_dotenv
-from terminaltables import AsciiTable
 
-from average_salary import get_avg_salary
+
+TOWN = 4
+CATALOGUE = 33
+NO_AGREEMENT = 1
 
 
 def get_vacancies_sj(secret_key, language):
@@ -17,10 +16,10 @@ def get_vacancies_sj(secret_key, language):
     list_of_vacancies = []
     while page < pages_number:
         params = {
-            'town': 4,
-            'catalogues': 33,
+            'town': TOWN,
+            'catalogues': CATALOGUE,
             'keyword': f'Программист {language}',
-            'no_agreement': 1,
+            'no_agreement': NO_AGREEMENT,
             'page': page
         }
         response = requests.get('https://api.superjob.ru/2.0/vacancies/', headers=header, params=params)

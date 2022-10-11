@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from terminaltables import AsciiTable
 
 from average_salary import get_avg_salary
-from hh_vacancies import predict_rub_salary_hh, get_vacancies_hh, get_vacancies_count_hh
-from superjob_vacancies import predict_rub_salary_sj, get_vacancies_sj, get_vacancies_count_sj
+from hh_vacancies import get_vacancies_hh, get_vacancies_count_hh, predict_rub_salary_hh
+from superjob_vacancies import get_vacancies_sj, get_vacancies_count_sj, predict_rub_salary_sj
 
 
 def create_table(jobs_stats, resource):
