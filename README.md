@@ -13,7 +13,7 @@ pip install -r requirements.txt
 # Вывод статистки по вакансиям
 
 - Получить ключ к API <a href="https://api.superjob.ru/" target="_blank">тут</a>;
-- Создать переменную окружения `SECRET_KEY` и поместить в нее полученный токен;
+- Создать переменную окружения `SJ_SECRET_KEY` и поместить в нее полученный токен;
 - Запустить скрипт.
 ```
 python main.py

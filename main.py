@@ -40,7 +40,7 @@ def main():
         'Swift'
     ]
     load_dotenv()
-    secret_key = os.environ['SECRET_KEY']
+    secret_key = os.environ['SJ_SECRET_KEY']
     sj_table_title = 'SuperJob Moscow'
     hh_table_title = 'HeadHunter Moscow'
     hh_jobs_stats = {}
