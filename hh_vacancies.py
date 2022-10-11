@@ -5,11 +5,12 @@ def get_vacancies_hh(language):
     """Getting vacancies from HeadHunter"""
     page = 0
     pages_number = 1
+    city = 1
     vacancies = []
     while page < pages_number:
         params = {
             'text': f'Программист {language}',
-            'area': '1',
+            'area': city,
             'only_with_salary': 'true',
             'page': page
         }
