@@ -14,7 +14,7 @@ def get_vacancies_sj(secret_key, language):
     header = {
         'X-Api-App-Id': secret_key
     }
-    vacancies = []
+    list_of_vacancies = []
     while page < pages_number:
         params = {
             'town': 4,
@@ -27,11 +27,12 @@ def get_vacancies_sj(secret_key, language):
         response.raise_for_status()
         page += 1
         pages_number += 1
-        if not response.json()['objects']:
+        vacancies = response.json()['objects']
+        if not vacancies:
             break
         else:
-            vacancies.extend(response.json()['objects'])
-        return vacancies
+            list_of_vacancies.extend(vacancies)
+        return list_of_vacancies
 
 
 def get_vacancies_count_sj(secret_key, language):
