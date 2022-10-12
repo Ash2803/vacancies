@@ -46,13 +46,15 @@ def main():
     hh_jobs_stats = {}
     sj_jobs_stats = {}
     for language in languages:
-        hh_predicted_salary = get_salaries_hh(get_vacancies_hh(language))
-        sj_predicted_salary = get_salaries_sj(get_vacancies_sj(secret_key, language))
-        hh_jobs_stats[language] = {'vacancies_found': get_vacancies_count_hh(get_vacancies_hh(language)),
+        vacancies_hh = get_vacancies_hh(language)
+        vacancies_sj = get_vacancies_sj(secret_key, language)
+        hh_predicted_salary = get_salaries_hh(vacancies_hh)
+        sj_predicted_salary = get_salaries_sj(vacancies_sj)
+        hh_jobs_stats[language] = {'vacancies_found': get_vacancies_count_hh(vacancies_hh),
                                    'vacancies_processed': len(hh_predicted_salary),
                                    "average_salary": get_avg_salary(hh_predicted_salary)
                                    }
-        sj_jobs_stats[language] = {'vacancies_found': get_vacancies_count_sj(get_vacancies_sj(secret_key, language)),
+        sj_jobs_stats[language] = {'vacancies_found': get_vacancies_count_sj(vacancies_sj),
                                    'vacancies_processed': len(sj_predicted_salary),
                                    "average_salary": get_avg_salary(sj_predicted_salary)
                                    }
