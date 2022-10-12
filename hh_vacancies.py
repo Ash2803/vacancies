@@ -8,7 +8,7 @@ def get_vacancies_hh(language):
     page = 0
     pages_number = 1
     city = 1
-    list_of_vacancies = []
+    vacancies = []
     while page < pages_number:
         params = {
             'text': f'Программист {language}',
@@ -21,12 +21,12 @@ def get_vacancies_hh(language):
         response.raise_for_status()
         page += 1
         pages_number += 1
-        vacancies = response.json()
-        if not vacancies['items']:
+        vacancies_per_page = response.json()
+        if not vacancies_per_page['items']:
             break
         else:
-            list_of_vacancies.append(vacancies)
-    return list_of_vacancies
+            vacancies.append(vacancies_per_page)
+    return vacancies
 
 
 def get_vacancies_count_hh(vacancies):
